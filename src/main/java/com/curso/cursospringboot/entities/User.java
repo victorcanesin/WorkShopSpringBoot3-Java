@@ -3,9 +3,19 @@ package com.curso.cursospringboot.entities;
 import java.io.Serializable;
 import java.util.Objects;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+
+@Entity
+@Table(name="tb_user") // renomeando nome da tabela pq no banco H2 ja existe a palavra user reservada
 public class User implements Serializable{
 	private static final long serialVersionUID = 1L;
 
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY) // informa a estrategia de auto encremento ja retorna o id no campo quando manda salvar
 	private Long id;
 
 	private String name;
