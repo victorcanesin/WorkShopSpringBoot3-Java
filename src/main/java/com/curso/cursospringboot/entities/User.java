@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -29,6 +31,7 @@ public class User implements Serializable{
 	
 	private String password;
 	
+	@JsonIgnore // faz com quem nao entre em loop ao buscar os pedidos e clientes 
 	@OneToMany(mappedBy="client") // um para muitos - indica o nome do atributo da classe user mapeia o cliente no pedido
 	private List<Order> orders = new ArrayList<>();
 	
