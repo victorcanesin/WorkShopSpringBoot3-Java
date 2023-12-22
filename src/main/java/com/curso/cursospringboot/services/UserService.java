@@ -32,4 +32,17 @@ public class UserService {
 	public void delete(Long id) {
 		repository.deleteById(id);
 	}
+	
+	public User update(Long id, User user) {
+		// get reference by id apenas monitora o registro, findbyId iria direto no banco buscar ele
+		User entity = repository.getReferenceById(id);
+		updateDada(entity, user);
+		return repository.save(entity);
+	}
+
+	private void updateDada(User entity, User user) {
+		entity.setName(user.getName());
+		entity.setPhone(user.getPhone());
+		entity.setEmail(user.getEmail());		
+	}
 }
