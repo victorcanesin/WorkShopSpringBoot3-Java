@@ -56,6 +56,19 @@ public class TestConfig implements CommandLineRunner {
 		Product p8 = new Product(null, "MONITOR", "MONITOR 34' WQHD", 2900.0, "");
 
 		productRepository.saveAll(Arrays.asList(p1, p2, p3, p4, p5, p6, p7, p8));
+		
+		// salvar categories
+		p1.getCategory().add(cat2);
+		p2.getCategory().add(cat1);
+		p2.getCategory().add(cat3);
+		p3.getCategory().add(cat3);
+		p4.getCategory().add(cat3);
+		p5.getCategory().add(cat2);
+		p6.getCategory().add(cat1);
+		p7.getCategory().add(cat1);
+		p8.getCategory().add(cat1);
+		
+		productRepository.saveAll(Arrays.asList(p1, p2, p3, p4, p5, p6, p7, p8));
 
 		User user1 = new User(null, "victor canesin", "victor@email.com", "651513451", "pasewwsd#!@#");
 		User user2 = new User(null, "pc garcia", "pc_garcia@email.com", "6151154151", "pasewwsfddfd#!@#");
