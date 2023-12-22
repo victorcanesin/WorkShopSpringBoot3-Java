@@ -5,9 +5,11 @@ import java.time.Instant;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import com.curso.cursospringboot.entities.enums.OrderStatus;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
@@ -31,7 +33,11 @@ public class Order implements Serializable {
 	private Long id;
 
 	// formata a data no json formato de londres
-	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'", timezone = "GMT") // formatardata no json annnotation do jackson	
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'", timezone = "GMT") // formatardata
+																											// no json
+																											// annnotation
+																											// do
+																											// jackson
 	private Instant moment;
 
 	private Integer orderStatus;
@@ -39,11 +45,12 @@ public class Order implements Serializable {
 	@ManyToOne // informa que é N para 1 - chave estrangeira
 	@JoinColumn(name = "client_id_order")
 	private User client;
-	
-	@OneToMany(mappedBy="id.order") // order esta dentro do id na class OrderItem
+
+	@OneToMany(mappedBy = "id.order") // order esta dentro do id na class OrderItem
 	private Set<OrderItem> itens = new HashSet<>();
-			
-	@OneToOne(mappedBy="order", cascade=CascadeType.ALL) // CASCADE FAZ COM QUE O PAGAMENTO TENHA O MESMO ID QUE O ID DA ORDER
+
+	@OneToOne(mappedBy = "order", cascade = CascadeType.ALL) // CASCADE FAZ COM QUE O PAGAMENTO TENHA O MESMO ID QUE O
+	@JsonIgnore															// ID DA ORDER
 	private Payment payment;
 
 	public Order() {
@@ -86,13 +93,13 @@ public class Order implements Serializable {
 	}
 
 	public void setOrderStatus(OrderStatus orderStatus) {
-		if(orderStatus != null)
-		this.orderStatus = orderStatus.getId();
+		if (orderStatus != null)
+			this.orderStatus = orderStatus.getId();
 	}
-	
-	public  Set<OrderItem> getItens(){
+
+	public Set<OrderItem> getItens() {
 		return itens;
-	}	
+	}
 
 	public Payment getPayment() {
 		return payment;
@@ -100,6 +107,16 @@ public class Order implements Serializable {
 
 	public void setPayment(Payment payment) {
 		this.payment = payment;
+	}
+
+	public Double getTotal() {
+		// double soma =0;
+
+		/*
+		 * for(OrderItem item : itens) { soma += item.getSubTotal(); }
+		 */
+		// return soma;
+		return (double) (itens.stream().collect(Collectors.summingDouble(OrderItem::getSubTotal)));
 	}
 
 	@Override
