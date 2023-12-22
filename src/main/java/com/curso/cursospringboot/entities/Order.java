@@ -34,11 +34,7 @@ public class Order implements Serializable {
 	private Long id;
 
 	// formata a data no json formato de londres
-	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'", timezone = "GMT") // formatardata
-																											// no json
-																											// annnotation
-																											// do
-																											// jackson
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'", timezone = "GMT") // formatardata no json annnotation do jackson
 	private Instant moment;
 
 	private Integer orderStatus;
